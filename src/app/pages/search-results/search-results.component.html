@@ -1,0 +1,38 @@
+<section class="section">
+  <div class="container">
+    <div class="top">
+      <div>
+        <h2>Food search</h2>
+        <div class="muted">Find dishes across restaurants • filters + sorting.</div>
+      </div>
+
+      <div class="actions glass">
+        <input class="input" [(ngModel)]="q" placeholder="Search for dishes..." (keyup.enter)="updateQuery()" />
+        <button class="btn primary" type="button" (click)="updateQuery()">Search</button>
+      </div>
+    </div>
+
+    <div class="filters card glass">
+      <div class="left">
+        <app-category-chips
+          [categories]="categories"
+          [selected]="category"
+          (selectedChange)="category = $event"
+        ></app-category-chips>
+      </div>
+      <div class="right">
+        <select class="sel" [(ngModel)]="sort">
+          <option value="relevance">Sort: Relevance</option>
+          <option value="rating">Sort: Rating</option>
+          <option value="priceAsc">Sort: Price (low)</option>
+          <option value="priceDesc">Sort: Price (high)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="muted count">{{ results.length }} result(s)</div>
+    <div class="grid cols-3">
+      <app-food-card *ngFor="let d of results" [dish]="d"></app-food-card>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,11 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <div class="float" *ngIf="vm.show">
+    <div class="container inner glass">
+      <div class="left">
+        <div class="title">Cart</div>
+        <div class="muted">{{ vm.count }} item(s) • Subtotal ₹{{ vm.subtotal }}</div>
+      </div>
+      <a class="btn primary" routerLink="/cart">View cart • ₹{{ vm.total }}</a>
+    </div>
+  </div>
+</ng-container>

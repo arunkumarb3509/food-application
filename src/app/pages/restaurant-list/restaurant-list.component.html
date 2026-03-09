@@ -1,0 +1,49 @@
+<section class="section">
+  <div class="container">
+    <div class="top">
+      <div>
+        <h2>Restaurants</h2>
+        <div class="muted">Discover places near you • card-based grid with quick filters.</div>
+      </div>
+
+      <div class="actions glass">
+        <input class="input" [(ngModel)]="q" placeholder="Search restaurants or cuisines..." />
+        <select class="sel" [(ngModel)]="sort" aria-label="Sort restaurants">
+          <option value="relevance">Sort: Relevance</option>
+          <option value="rating">Sort: Rating</option>
+          <option value="delivery">Sort: Delivery time</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="filters card glass">
+      <div class="f">
+        <div class="label">Cuisine</div>
+        <select class="sel" [(ngModel)]="cuisine">
+          <option *ngFor="let c of cuisines" [value]="c">{{ c }}</option>
+        </select>
+      </div>
+      <div class="f">
+        <div class="label">Min rating</div>
+        <div class="range">
+          <input type="range" min="0" max="5" step="0.5" [(ngModel)]="minRating" />
+          <span class="muted">{{ minRating }}+</span>
+        </div>
+      </div>
+      <div class="f">
+        <div class="label">Max delivery</div>
+        <div class="range">
+          <input type="range" min="15" max="60" step="1" [(ngModel)]="maxDelivery" />
+          <span class="muted">{{ maxDelivery }} min</span>
+        </div>
+      </div>
+      <button class="btn" type="button" (click)="q=''; cuisine='All'; minRating=0; maxDelivery=60; sort='relevance'">
+        Reset
+      </button>
+    </div>
+
+    <div class="grid cols-4">
+      <app-restaurant-card *ngFor="let r of filtered" [restaurant]="r"></app-restaurant-card>
+    </div>
+  </div>
+</section>

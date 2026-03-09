@@ -1,0 +1,112 @@
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="copy">
+      <div class="kicker">Hot & fresh • delivered fast</div>
+      <h1>Cravings? We’ve got the best bites near you.</h1>
+      <p class="muted">
+        Search dishes, explore trending restaurants, and order in seconds — inspired by modern food
+        delivery UX.
+      </p>
+
+      <div class="hero-search glass">
+        <input class="input" [(ngModel)]="q" placeholder="Search pizza, biryani, desserts..." />
+        <button class="btn primary" type="button" (click)="goSearch()">Find food</button>
+      </div>
+
+      <div class="chips-wrap">
+        <app-category-chips [categories]="categories" [selected]="'All'"></app-category-chips>
+      </div>
+    </div>
+
+    <div class="art card glass">
+      <div class="img">
+        <img
+          src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600"
+          alt="Food hero"
+        />
+      </div>
+      <div class="art-badges">
+        <div class="b">
+          <div class="t">4.6★</div>
+          <div class="muted">Top rated</div>
+        </div>
+        <div class="b">
+          <div class="t">25 min</div>
+          <div class="muted">Avg delivery</div>
+        </div>
+        <div class="b">
+          <div class="t">₹0</div>
+          <div class="muted">Free delivery*</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="head">
+      <h2>Trending restaurants</h2>
+      <a class="btn" routerLink="/restaurants">View all</a>
+    </div>
+    <div class="grid cols-4">
+      <app-restaurant-card *ngFor="let r of trending" [restaurant]="r"></app-restaurant-card>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="head">
+      <h2>Featured dishes</h2>
+      <a class="btn" [routerLink]="['/search']" [queryParams]="{ q: 'bestseller' }">See more</a>
+    </div>
+    <div class="grid cols-3">
+      <app-food-card *ngFor="let d of featured" [dish]="d"></app-food-card>
+    </div>
+  </div>
+</section>
+
+<section class="section promos">
+  <div class="container">
+    <div class="grid cols-2">
+      <div class="promo card glass">
+        <div class="p-title">Flat 60% off</div>
+        <div class="muted">On your first 3 orders • Use code FOODLY</div>
+        <div class="p-cta">
+          <a class="btn primary" routerLink="/restaurants">Order now</a>
+        </div>
+      </div>
+      <div class="promo card glass alt">
+        <div class="p-title">Free delivery</div>
+        <div class="muted">On orders above ₹499 • Limited time</div>
+        <div class="p-cta">
+          <a class="btn" routerLink="/search" [queryParams]="{ q: 'drinks' }">Explore deals</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section download">
+  <div class="container dl card glass">
+    <div class="left">
+      <h2>Download the app</h2>
+      <p class="muted">
+        Save addresses, reorder favorites, and track deliveries with smooth micro-interactions.
+      </p>
+      <div class="stores">
+        <button class="btn"> App Store</button>
+        <button class="btn">▶ Google Play</button>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen">
+        <div class="bar"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile small"></div>
+      </div>
+    </div>
+  </div>
+</section>

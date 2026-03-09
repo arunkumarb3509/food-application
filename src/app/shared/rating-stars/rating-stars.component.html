@@ -1,0 +1,4 @@
+<span class="stars" [class.compact]="compact" [attr.aria-label]="'Rating ' + (rating | number: '1.1-1') + ' out of 5'">
+  <span class="star" *ngFor="let s of stars()" [class.filled]="filled(s)">★</span>
+  <span class="value" *ngIf="!compact">{{ rating | number: '1.1-1' }}</span>
+</span>

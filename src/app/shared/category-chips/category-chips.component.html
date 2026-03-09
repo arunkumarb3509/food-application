@@ -1,0 +1,15 @@
+<div class="chips">
+  <button class="chip" type="button" [class.active]="selected === 'All'" (click)="select('All')">
+    ✨ All
+  </button>
+  <button
+    class="chip"
+    type="button"
+    *ngFor="let c of categories"
+    [class.active]="selected === c.id"
+    (click)="select(c.id)"
+  >
+    <span class="e">{{ c.emoji }}</span>
+    <span class="t">{{ c.label }}</span>
+  </button>
+</div>

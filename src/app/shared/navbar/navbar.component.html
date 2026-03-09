@@ -1,0 +1,34 @@
+<header class="nav-wrap">
+  <div class="nav container">
+    <a class="brand" routerLink="/">
+      <span class="brand-dot"></span>
+      <span class="brand-text">Foodly</span>
+    </a>
+
+    <div class="location glass">
+      <span class="pin">📍</span>
+      <select [(ngModel)]="location" aria-label="Select location">
+        <option *ngFor="let l of locations" [value]="l">{{ l }}</option>
+      </select>
+    </div>
+
+    <form class="search glass" (ngSubmit)="submitSearch()">
+      <span class="icon">🔎</span>
+      <input class="search-input" [(ngModel)]="search" name="q" placeholder="Search for pizza, biryani, desserts..." />
+      <button class="btn primary" type="submit">Search</button>
+    </form>
+
+    <nav class="links">
+      <a routerLink="/restaurants" routerLinkActive="active">Restaurants</a>
+      <a routerLink="/search" routerLinkActive="active">Food</a>
+      <a routerLink="/cart" routerLinkActive="active" class="cart-link">
+        <span>Cart</span>
+        <span class="badge" *ngIf="(cartCount$ | async) as c" [class.show]="c > 0">{{ c }}</span>
+      </a>
+      <button class="btn theme" type="button" (click)="theme.toggle()">
+        <span class="theme-ico">{{ theme.mode === 'dark' ? '🌙' : '☀️' }}</span>
+        <span class="theme-text">{{ theme.mode === 'dark' ? 'Dark' : 'Light' }}</span>
+      </button>
+    </nav>
+  </div>
+</header>

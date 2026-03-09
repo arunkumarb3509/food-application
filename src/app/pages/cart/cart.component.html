@@ -1,0 +1,64 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <section class="section">
+    <div class="container">
+      <div class="top">
+        <div>
+          <h2>Your cart</h2>
+          <div class="muted" *ngIf="vm.lines.length; else empty">Review items and checkout.</div>
+        </div>
+        <a class="btn" routerLink="/restaurants">Add more</a>
+      </div>
+
+      <ng-template #empty>
+        <div class="card glass empty">
+          <h3>Cart is empty</h3>
+          <p class="muted">Add a few tasty dishes to see them here.</p>
+          <a class="btn primary" routerLink="/restaurants">Browse restaurants</a>
+        </div>
+      </ng-template>
+
+      <div class="layout" *ngIf="vm.lines.length">
+        <div class="items card glass">
+          <div class="line" *ngFor="let l of vm.lines">
+            <img class="thumb" [src]="l.dish.imageUrl" [alt]="l.dish.name" />
+            <div class="info">
+              <div class="name">{{ l.dish.name }}</div>
+              <div class="muted">₹{{ l.dish.price }} • {{ l.dish.category }}</div>
+              <div class="qty">
+                <button class="btn" type="button" (click)="dec(l.dish.id)">−</button>
+                <div class="count">{{ l.qty }}</div>
+                <button class="btn" type="button" (click)="inc(l.dish.id)">+</button>
+              </div>
+            </div>
+            <div class="right">
+              <div class="sum">₹{{ l.qty * l.dish.price }}</div>
+              <button class="btn" type="button" (click)="remove(l.dish.id)">Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="bill card glass">
+          <h3>Bill details</h3>
+          <div class="row">
+            <span class="muted">Subtotal</span>
+            <span>₹{{ vm.subtotal }}</span>
+          </div>
+          <div class="row">
+            <span class="muted">Delivery fee</span>
+            <span>{{ vm.deliveryFee ? ('₹' + vm.deliveryFee) : 'Free' }}</span>
+          </div>
+          <div class="row">
+            <span class="muted">Platform fee</span>
+            <span>₹{{ vm.platformFee }}</span>
+          </div>
+          <div class="row total">
+            <span>Total</span>
+            <span>₹{{ vm.total }}</span>
+          </div>
+          <a class="btn primary" routerLink="/checkout">Checkout</a>
+          <div class="muted note">Tip: orders above ₹499 get free delivery.</div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</ng-container>

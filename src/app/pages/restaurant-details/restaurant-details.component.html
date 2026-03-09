@@ -1,0 +1,48 @@
+<ng-container *ngIf="restaurant as r; else missing">
+  <section class="cover">
+    <img class="bg" [src]="r.imageUrl" [alt]="r.name" />
+    <div class="overlay"></div>
+    <div class="container info glass card">
+      <div class="title">
+        <h1>{{ r.name }}</h1>
+        <app-rating-stars [rating]="r.rating"></app-rating-stars>
+      </div>
+      <div class="meta muted">
+        <span>{{ r.cuisines.join(' • ') }}</span>
+        <span>•</span>
+        <span>{{ r.deliveryMins }} min delivery</span>
+        <span>•</span>
+        <span>₹{{ r.priceForOne }} for one</span>
+      </div>
+      <div class="chips">
+        <button
+          class="chip"
+          *ngFor="let c of categories"
+          [class.active]="selected === c"
+          type="button"
+          (click)="selected = c"
+        >
+          {{ c }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid cols-3">
+        <app-food-card *ngFor="let d of visibleMenu" [dish]="d"></app-food-card>
+      </div>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #missing>
+  <section class="section">
+    <div class="container card glass missing">
+      <h2>Restaurant not found</h2>
+      <p class="muted">Try going back to the listing page.</p>
+      <a class="btn primary" routerLink="/restaurants">Browse restaurants</a>
+    </div>
+  </section>
+</ng-template>

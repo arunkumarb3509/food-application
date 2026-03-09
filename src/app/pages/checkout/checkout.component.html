@@ -1,0 +1,85 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <section class="section">
+    <div class="container">
+      <div class="top">
+        <div>
+          <h2>Checkout</h2>
+          <div class="muted">Delivery address • payment • order summary.</div>
+        </div>
+        <a class="btn" routerLink="/cart">Back to cart</a>
+      </div>
+
+      <div class="layout">
+        <form class="card glass box" [formGroup]="form">
+          <h3>Delivery details</h3>
+          <div class="grid2">
+            <div>
+              <div class="label">Full name</div>
+              <input class="input" formControlName="fullName" placeholder="Your name" />
+            </div>
+            <div>
+              <div class="label">Phone</div>
+              <input class="input" formControlName="phone" placeholder="10-digit mobile" />
+            </div>
+          </div>
+          <div>
+            <div class="label">Address</div>
+            <input class="input" formControlName="addressLine" placeholder="House no, building, street, area" />
+          </div>
+          <div>
+            <div class="label">Landmark (optional)</div>
+            <input class="input" formControlName="landmark" placeholder="Near..." />
+          </div>
+
+          <h3 class="mt">Payment</h3>
+          <div class="pay">
+            <label class="opt">
+              <input type="radio" value="UPI" formControlName="payment" />
+              <span>UPI</span>
+            </label>
+            <label class="opt">
+              <input type="radio" value="Card" formControlName="payment" />
+              <span>Card</span>
+            </label>
+            <label class="opt">
+              <input type="radio" value="COD" formControlName="payment" />
+              <span>Cash on delivery</span>
+            </label>
+          </div>
+        </form>
+
+        <aside class="card glass box">
+          <h3>Order summary</h3>
+          <div class="mini" *ngFor="let l of vm.lines">
+            <span class="muted">{{ l.qty }}×</span>
+            <span class="name">{{ l.dish.name }}</span>
+            <span class="right">₹{{ l.qty * l.dish.price }}</span>
+          </div>
+
+          <div class="divider"></div>
+          <div class="row">
+            <span class="muted">Subtotal</span>
+            <span>₹{{ vm.subtotal }}</span>
+          </div>
+          <div class="row">
+            <span class="muted">Delivery fee</span>
+            <span>{{ vm.deliveryFee ? ('₹' + vm.deliveryFee) : 'Free' }}</span>
+          </div>
+          <div class="row">
+            <span class="muted">Platform fee</span>
+            <span>₹{{ vm.platformFee }}</span>
+          </div>
+          <div class="row total">
+            <span>Total</span>
+            <span>₹{{ vm.total }}</span>
+          </div>
+
+          <button class="btn primary" type="button" [disabled]="placing || !vm.lines.length" (click)="placeOrder()">
+            {{ placing ? 'Placing order...' : 'Place order' }}
+          </button>
+          <div class="muted note">This is UI-only — no real payment is processed.</div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</ng-container>

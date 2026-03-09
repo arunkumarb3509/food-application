@@ -1,0 +1,17 @@
+<div class="fc card">
+  <div class="img">
+    <img [src]="dish.imageUrl" [alt]="dish.name" loading="lazy" />
+    <div class="badge" *ngIf="dish.bestseller">Bestseller</div>
+  </div>
+  <div class="body">
+    <div class="top">
+      <div class="name">{{ dish.name }}</div>
+      <app-rating-stars [rating]="dish.rating" [compact]="true"></app-rating-stars>
+    </div>
+    <div class="desc muted">{{ dish.description }}</div>
+    <div class="bottom">
+      <div class="price">₹{{ dish.price }}</div>
+      <button class="btn primary" type="button" (click)="add()">Add</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.app-main {
+  min-height: calc(100vh - 72px);
+  padding-top: 72px; // sticky header space
+}
+
+@media (max-width: 540px) {
+  .app-main {
+    padding-top: 64px;
+  }
+}
