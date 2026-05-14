@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 *,
 *::before,
@@ -13,7 +13,14 @@ body {
 
 body {
   margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
   background: var(--bg);
   color: var(--text);
   letter-spacing: -0.01em;
@@ -36,13 +43,26 @@ body {
   --bg-elev: #ffffff;
   --text: #0b1220;
   --muted: rgba(11, 18, 32, 0.66);
-  --border: rgba(15, 23, 42, 0.10);
-  --chip: rgba(255, 77, 77, 0.10);
+  --border: rgba(15, 23, 42, 0.1);
+  --chip: rgba(255, 77, 77, 0.1);
   --chipText: #d92525;
   --glass: rgba(255, 255, 255, 0.75);
-  --heroGrad: radial-gradient(1200px 500px at 20% 10%, rgba(255, 138, 61, 0.30), transparent 55%),
-    radial-gradient(900px 450px at 80% 0%, rgba(255, 77, 77, 0.22), transparent 55%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.86));
+  --heroGrad:
+    radial-gradient(
+      1200px 500px at 20% 10%,
+      rgba(255, 138, 61, 0.3),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 450px at 80% 0%,
+      rgba(255, 77, 77, 0.22),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(255, 255, 255, 0.86)
+    );
 }
 
 body.theme-dark {
@@ -56,8 +76,17 @@ body.theme-dark {
   --glass: rgba(255, 255, 255, 0.08);
   --shadow-sm: 0 10px 28px rgba(0, 0, 0, 0.28);
   --shadow-md: 0 28px 70px rgba(0, 0, 0, 0.38);
-  --heroGrad: radial-gradient(1100px 520px at 15% 10%, rgba(255, 138, 61, 0.35), transparent 60%),
-    radial-gradient(900px 520px at 85% 0%, rgba(255, 77, 77, 0.28), transparent 60%),
+  --heroGrad:
+    radial-gradient(
+      1100px 520px at 15% 10%,
+      rgba(255, 138, 61, 0.35),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 520px at 85% 0%,
+      rgba(255, 77, 77, 0.28),
+      transparent 60%
+    ),
     linear-gradient(180deg, rgba(10, 31, 68, 0.92), rgba(10, 31, 68, 0.86));
 }
 
@@ -135,7 +164,11 @@ a {
   color: var(--text);
   padding: 10px 14px;
   border-radius: 14px;
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, border-color 160ms ease;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
   cursor: pointer;
 }
 
@@ -163,7 +196,9 @@ a {
   padding: 12px 14px;
   background: var(--bg-elev);
   color: var(--text);
-  transition: box-shadow 160ms ease, border-color 160ms ease;
+  transition:
+    box-shadow 160ms ease,
+    border-color 160ms ease;
 }
 
 .input::placeholder {
@@ -187,7 +222,10 @@ a {
   color: var(--chipText);
   user-select: none;
   cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
 }
 
 .chip:hover {
