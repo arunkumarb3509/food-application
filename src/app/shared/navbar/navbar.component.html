@@ -1,4 +1,4 @@
-<header class="nav-wrap">
+<!-- <header class="nav-wrap">
   <div class="nav container">
     <a class="brand" routerLink="/">
       <span class="brand-dot"></span>
@@ -43,5 +43,103 @@
         }}</span>
       </button>
     </nav>
+  </div>
+</header> -->
+
+<header class="nav-wrap">
+  <div class="nav container">
+
+    <!-- Logo -->
+    <a class="brand" routerLink="/">
+      <div class="brand-logo">
+        <i class="fas fa-utensils"></i>
+      </div>
+
+      <div class="brand-info">
+        <span class="brand-text">Foodly</span>
+        <small>Fresh & Fast</small>
+      </div>
+    </a>
+
+    <!-- Location -->
+    <div class="select-wrapper">
+      <i class="fas fa-location-dot location-icon"></i>
+
+      <select [(ngModel)]="location" class="custom-select">
+        <option *ngFor="let l of locations" [value]="l">
+          {{ l }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Search -->
+    <form class="search glass" (ngSubmit)="submitSearch()">
+
+      <i class="fas fa-search search-icon"></i>
+
+      <input
+        class="search-input"
+        [(ngModel)]="search"
+        name="q"
+        placeholder="Search for pizza, biryani, desserts..."
+      />
+
+      <button class="btn primary" type="submit">
+        Search
+      </button>
+
+    </form>
+
+    <!-- Navigation -->
+    <nav class="links">
+
+      <a routerLink="/restaurants" routerLinkActive="active">
+        <i class="fas fa-store"></i>
+        Restaurants
+      </a>
+
+      <a routerLink="/search" routerLinkActive="active">
+        <i class="fas fa-bowl-food"></i>
+        Food
+      </a>
+
+      <a
+        routerLink="/cart"
+        routerLinkActive="active"
+        class="cart-link"
+      >
+        <i class="fas fa-cart-shopping"></i>
+
+        <span>Cart</span>
+
+        <span
+          class="badge"
+          *ngIf="cartCount$ | async as c"
+          [class.show]="c > 0"
+        >
+          {{ c }}
+        </span>
+
+      </a>
+
+      <button
+        class="btn theme"
+        type="button"
+        (click)="theme.toggle()"
+      >
+
+        <i
+          class="fas"
+          [ngClass]="theme.mode === 'dark' ? 'fa-moon' : 'fa-sun'"
+        ></i>
+
+        <span class="theme-text">
+          {{ theme.mode === "dark" ? "Dark" : "Light" }}
+        </span>
+
+      </button>
+
+    </nav>
+
   </div>
 </header>

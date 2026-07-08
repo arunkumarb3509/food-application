@@ -32,7 +32,7 @@ export class CartService {
   }
 
   get total(): number {
-    return this.subtotal + this.deliveryFee + this.platformFee;
+  return this.subtotal + this.deliveryFee + this.platformFee;
   }
 
   add(dish: Dish, qty = 1) {

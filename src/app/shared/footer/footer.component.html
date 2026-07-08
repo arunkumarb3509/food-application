@@ -1,4 +1,4 @@
-<footer class="foot">
+<!-- <footer class="foot">
   <div class="container inner">
     <div class="brand">
       <div class="logo"></div>
@@ -34,5 +34,95 @@
 
   <div class="bottom">
     <div class="container muted">© {{ year }} Foodly — UI concept inspired by popular food delivery apps.</div>
+  </div>
+</footer> -->
+
+<footer class="foot">
+  <div class="container inner">
+
+    <!-- Brand -->
+    <div class="brand">
+      <div class="logo">
+        <i class="fas fa-utensils"></i>
+      </div>
+
+      <div>
+        <div class="name">Foodly</div>
+        <div class="tag muted">
+          Delicious food, delivered with love.
+        </div>
+      </div>
+    </div>
+
+    <!-- Links -->
+    <div class="cols">
+
+      <div class="col">
+        <div class="title">Explore</div>
+        <a routerLink="/">
+          <i class="fas fa-home"></i> Home
+        </a>
+
+        <a routerLink="/restaurants">
+          <i class="fas fa-store"></i> Restaurants
+        </a>
+
+        <a routerLink="/search">
+          <i class="fas fa-search"></i> Search
+        </a>
+      </div>
+
+      <div class="col">
+        <div class="title">Support</div>
+
+        <a href="#">
+          <i class="fas fa-headset"></i> Help Center
+        </a>
+
+        <a href="#">
+          <i class="fas fa-handshake"></i> Partner With Us
+        </a>
+
+        <a href="#">
+          <i class="fas fa-file-contract"></i> Terms & Privacy
+        </a>
+      </div>
+
+      <div class="col">
+        <div class="title">Follow Us</div>
+
+        <div class="social">
+
+          <a href="#" class="social-icon instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+
+          <a href="#" class="social-icon facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+
+          <a href="#" class="social-icon twitter">
+            <i class="fab fa-x-twitter"></i>
+          </a>
+
+          <a href="#" class="social-icon youtube">
+            <i class="fab fa-youtube"></i>
+          </a>
+
+          <a href="#" class="social-icon linkedin">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="bottom">
+    <div class="container muted">
+      © {{ year }} Foodly. All Rights Reserved.
+    </div>
   </div>
 </footer>
