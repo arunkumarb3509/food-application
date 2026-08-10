@@ -4,7 +4,8 @@
   left: 0;
   right: 0;
   z-index: 20;
-  background: linear-gradient(180deg, rgba(10, 31, 68, 0.0), rgba(10, 31, 68, 0.0));
+  // background: linear-gradient(180deg, rgba(10, 31, 68, 0.0), rgba(10, 31, 68, 0.0));
+  background: var(--bg);
 }
 
 .nav {

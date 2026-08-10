@@ -4,17 +4,26 @@
       <div class="kicker">Hot & fresh • delivered fast</div>
       <h1>Cravings? We’ve got the best bites near you.</h1>
       <p class="muted">
-        Search dishes, explore trending restaurants, and order in seconds — inspired by modern food
-        delivery UX.
+        Search dishes, explore trending restaurants, and order in seconds —
+        inspired by modern food delivery UX.
       </p>
 
       <div class="hero-search glass">
-        <input class="input" [(ngModel)]="q" placeholder="Search pizza, biryani, desserts..." />
-        <button class="btn primary" type="button" (click)="goSearch()">Find food</button>
+        <input
+          class="input"
+          [(ngModel)]="q"
+          placeholder="Search pizza, biryani, desserts..."
+        />
+        <button class="btn primary" type="button" (click)="goSearch()">
+          Find food
+        </button>
       </div>
 
       <div class="chips-wrap">
-        <app-category-chips [categories]="categories" [selected]="'All'"></app-category-chips>
+        <app-category-chips
+          [categories]="categories"
+          [selected]="'All'"
+        ></app-category-chips>
       </div>
     </div>
 
@@ -50,7 +59,10 @@
       <a class="btn" routerLink="/restaurants">View all</a>
     </div>
     <div class="grid cols-4">
-      <app-restaurant-card *ngFor="let r of trending" [restaurant]="r"></app-restaurant-card>
+      <app-restaurant-card
+        *ngFor="let r of trending"
+        [restaurant]="r"
+      ></app-restaurant-card>
     </div>
   </div>
 </section>
@@ -59,7 +71,12 @@
   <div class="container">
     <div class="head">
       <h2>Featured dishes</h2>
-      <a class="btn" [routerLink]="['/search']" [queryParams]="{ q: 'bestseller' }">See more</a>
+      <a
+        class="btn"
+        [routerLink]="['/search']"
+        [queryParams]="{ q: 'bestseller' }"
+        >See more</a
+      >
     </div>
     <div class="grid cols-3">
       <app-food-card *ngFor="let d of featured" [dish]="d"></app-food-card>
@@ -81,7 +98,9 @@
         <div class="p-title">Free delivery</div>
         <div class="muted">On orders above ₹499 • Limited time</div>
         <div class="p-cta">
-          <a class="btn" routerLink="/search" [queryParams]="{ q: 'drinks' }">Explore deals</a>
+          <a class="btn" routerLink="/search" [queryParams]="{ q: 'drinks' }"
+            >Explore deals</a
+          >
         </div>
       </div>
     </div>
@@ -90,22 +109,115 @@
 
 <section class="section download">
   <div class="container dl card glass">
+    <!-- Left Content -->
     <div class="left">
+      <span class="kicker">📱 Foodly Mobile App</span>
+
       <h2>Download the app</h2>
+
       <p class="muted">
-        Save addresses, reorder favorites, and track deliveries with smooth micro-interactions.
+        Order your favorite food, save your favorite dishes, reorder quickly,
+        and track your delivery in real time.
       </p>
+
       <div class="stores">
-        <button class="btn"> App Store</button>
-        <button class="btn">▶ Google Play</button>
+        <button class="store-btn" type="button">
+          <i class="fa-brands fa-apple"></i>
+
+          <span>
+            <small>Download on the</small>
+            <strong>App Store</strong>
+          </span>
+        </button>
+
+        <button class="store-btn" type="button">
+          <i class="fa-brands fa-google-play"></i>
+
+          <span>
+            <small>GET IT ON</small>
+            <strong>Google Play</strong>
+          </span>
+        </button>
       </div>
     </div>
+
+    <!-- Phone Preview -->
     <div class="phone">
-      <div class="screen">
-        <div class="bar"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile small"></div>
+      <div class="phone-frame">
+        <!-- Phone Header -->
+        <div class="phone-header">
+          <div>
+            <small>Delivering to</small>
+            <strong>Attayyampatti 📍</strong>
+          </div>
+
+          <div class="profile">
+            <i class="fa-solid fa-user"></i>
+          </div>
+        </div>
+
+        <!-- Search -->
+        <div class="phone-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>Search for food...</span>
+        </div>
+
+        <!-- Food Banner -->
+        <div class="phone-banner">
+          <div class="banner-content">
+            <small>Hungry?</small>
+            <strong>Get 30% OFF</strong>
+            <span>on your first order</span>
+          </div>
+
+          <img src="assets/biryani.png" alt="Delicious food" />
+        </div>
+
+        <!-- Categories -->
+        <div class="phone-section-title">
+          <strong>Popular categories</strong>
+        </div>
+
+        <div class="mini-categories">
+          <div class="mini-category">
+            <span>🍔</span>
+            <small>Burger</small>
+          </div>
+
+          <div class="mini-category">
+            <span>🍕</span>
+            <small>Pizza</small>
+          </div>
+
+          <div class="mini-category">
+            <span>🍛</span>
+            <small>Biryani</small>
+          </div>
+
+          <div class="mini-category">
+            <span>🍰</span>
+            <small>Dessert</small>
+          </div>
+        </div>
+
+        <!-- Popular Food -->
+        <div class="phone-section-title">
+          <strong>Popular near you</strong>
+        </div>
+
+        <div class="mini-food">
+          <img src="assets/burger.png" alt="Burger" />
+
+          <div class="mini-food-info">
+            <strong>Classic Burger</strong>
+            <small>⭐ 4.8 • 20 min</small>
+            <b>₹199</b>
+          </div>
+
+          <button type="button">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
