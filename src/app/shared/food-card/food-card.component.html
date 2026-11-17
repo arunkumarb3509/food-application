@@ -1,7 +1,12 @@
 <div class="fc card">
   <div class="img">
     <img [src]="dish.imageUrl" [alt]="dish.name" loading="lazy" />
-    <div class="badge" *ngIf="dish.bestseller">Bestseller</div>
+    <div class="badge bestseller" *ngIf="dish.bestseller">
+      <i class="fas fa-award"></i> Bestseller
+    </div>
+    <div class="img-overlay">
+      <div class="category-pill">{{ dish.category }}</div>
+    </div>
   </div>
   <div class="body">
     <div class="top">
@@ -10,8 +15,18 @@
     </div>
     <div class="desc muted">{{ dish.description }}</div>
     <div class="bottom">
-      <div class="price">₹{{ dish.price }}</div>
-      <button class="btn primary" type="button" (click)="add()">Add</button>
+      <div class="price">
+        <span class="currency">₹</span>{{ dish.price }}
+      </div>
+      <button
+        class="btn primary add-btn"
+        type="button"
+        (click)="add()"
+        [class.added]="justAdded"
+      >
+        <i class="fas" [ngClass]="justAdded ? 'fa-check' : 'fa-plus'"></i>
+        <span>{{ justAdded ? 'Added!' : 'Add' }}</span>
+      </button>
     </div>
   </div>
 </div>

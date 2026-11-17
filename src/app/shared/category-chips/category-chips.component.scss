@@ -1,33 +1,61 @@
 .chips {
   display: flex;
-  gap: 10px;
-  overflow: auto;
-  padding: 6px 2px;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 10px;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
+/* Individual chip — styles come from global .chip + local overrides */
 .chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill, 999px);
   border: 1px solid var(--border);
-  background: var(--glass);
+  background: var(--bg-elev);
   color: var(--text);
-  padding: 10px 12px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
+  font-size: 14px;
+  font-weight: 500;
   white-space: nowrap;
-}
+  cursor: pointer;
+  transition:
+    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
 
-.chip:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
-  border-color: rgba(255, 77, 77, 0.35);
-}
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: rgba(255, 77, 77, 0.22);
+  }
 
-.chip.active {
-  background: linear-gradient(135deg, rgba(255, 77, 77, 0.20), rgba(255, 138, 61, 0.20));
-  border-color: rgba(255, 77, 77, 0.35);
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.active {
+    background: var(--grad-primary, linear-gradient(135deg, #ff4d4d, #ff8a3d));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(255, 77, 77, 0.32);
+  }
 }
 
 .e {
-  margin-right: 6px;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.t {
+  font-size: 14px;
 }

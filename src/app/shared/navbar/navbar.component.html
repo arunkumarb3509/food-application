@@ -1,145 +1,120 @@
-<!-- <header class="nav-wrap">
+<header class="nav-wrap" [class.scrolled]="scrolled">
   <div class="nav container">
-    <a class="brand" routerLink="/">
-      <span class="brand-dot"></span>
-      <span class="brand-text">Foodly</span>
+
+    <!-- Logo -->
+    <a class="brand" routerLink="/" (click)="closeMobile()">
+      <div class="brand-logo">
+        <i class="fas fa-utensils"></i>
+      </div>
+      <div class="brand-info">
+        <span class="brand-text">Foodly</span>
+        <small class="brand-sub">Fresh &amp; Fast</small>
+      </div>
     </a>
 
-    <div class="select-wrapper">
+    <!-- Location (desktop) -->
+    <div class="select-wrapper desktop-only">
+      <i class="fas fa-location-dot location-icon"></i>
       <select [(ngModel)]="location" class="custom-select">
-        <option *ngFor="let l of locations" [value]="l">
-          {{ l }}
-        </option>
+        <option *ngFor="let l of locations" [value]="l">{{ l }}</option>
       </select>
+      <i class="fas fa-chevron-down chevron"></i>
     </div>
 
-    <form class="search glass" (ngSubmit)="submitSearch()">
-      <span class="icon">🔎</span>
+    <!-- Search (desktop) -->
+    <form class="search glass desktop-search" (ngSubmit)="submitSearch()">
+      <i class="fas fa-search search-icon"></i>
       <input
         class="search-input"
         [(ngModel)]="search"
         name="q"
-        placeholder="Search for pizza, biryani, desserts..."
+        placeholder="Search restaurants, dishes…"
       />
       <button class="btn primary" type="submit">Search</button>
     </form>
 
-    <nav class="links">
-      <a routerLink="/restaurants" routerLinkActive="active">Restaurants</a>
-      <a routerLink="/search" routerLinkActive="active">Food</a>
-      <a routerLink="/cart" routerLinkActive="active" class="cart-link">
-        <span>Cart</span>
-        <span
-          class="badge"
-          *ngIf="cartCount$ | async as c"
-          [class.show]="c > 0"
-          >{{ c }}</span
-        >
-      </a>
-      <button class="btn theme" type="button" (click)="theme.toggle()">
-        <span class="theme-ico">{{ theme.mode === "dark" ? "🌙" : "☀️" }}</span>
-        <span class="theme-text">{{
-          theme.mode === "dark" ? "Dark" : "Light"
-        }}</span>
-      </button>
-    </nav>
-  </div>
-</header> -->
-
-<header class="nav-wrap">
-  <div class="nav container">
-
-    <!-- Logo -->
-    <a class="brand" routerLink="/">
-      <div class="brand-logo">
-        <i class="fas fa-utensils"></i>
-      </div>
-
-      <div class="brand-info">
-        <span class="brand-text">Foodly</span>
-        <small>Fresh & Fast</small>
-      </div>
-    </a>
-
-    <!-- Location -->
-    <div class="select-wrapper">
-      <i class="fas fa-location-dot location-icon"></i>
-
-      <select [(ngModel)]="location" class="custom-select">
-        <option *ngFor="let l of locations" [value]="l">
-          {{ l }}
-        </option>
-      </select>
-    </div>
-
-    <!-- Search -->
-    <form class="search glass" (ngSubmit)="submitSearch()">
-
-      <i class="fas fa-search search-icon"></i>
-
-      <input
-        class="search-input"
-        [(ngModel)]="search"
-        name="q"
-        placeholder="Search for pizza, biryani, desserts..."
-      />
-
-      <button class="btn primary" type="submit">
-        Search
-      </button>
-
-    </form>
-
-    <!-- Navigation -->
-    <nav class="links">
-
-      <a routerLink="/restaurants" routerLinkActive="active">
+    <!-- Nav links (desktop) -->
+    <nav class="links desktop-only">
+      <a routerLink="/restaurants" routerLinkActive="active" (click)="closeMobile()">
         <i class="fas fa-store"></i>
         Restaurants
       </a>
-
-      <a routerLink="/search" routerLinkActive="active">
+      <a routerLink="/search" routerLinkActive="active" (click)="closeMobile()">
         <i class="fas fa-bowl-food"></i>
         Food
       </a>
-
-      <a
-        routerLink="/cart"
-        routerLinkActive="active"
-        class="cart-link"
-      >
+      <a routerLink="/cart" routerLinkActive="active" class="cart-link" (click)="closeMobile()">
         <i class="fas fa-cart-shopping"></i>
-
-        <span>Cart</span>
-
-        <span
-          class="badge"
-          *ngIf="cartCount$ | async as c"
-          [class.show]="c > 0"
-        >
-          {{ c }}
-        </span>
-
+        <span class="cart-label">Cart</span>
+        <span class="badge" *ngIf="cartCount$ | async as c" [class.show]="c > 0">{{ c }}</span>
       </a>
-
-      <button
-        class="btn theme"
-        type="button"
-        (click)="theme.toggle()"
-      >
-
-        <i
-          class="fas"
-          [ngClass]="theme.mode === 'dark' ? 'fa-moon' : 'fa-sun'"
-        ></i>
-
-        <span class="theme-text">
-          {{ theme.mode === "dark" ? "Dark" : "Light" }}
-        </span>
-
+      <button class="btn theme-btn" type="button" (click)="theme.toggle()">
+        <i class="fas" [ngClass]="theme.mode === 'dark' ? 'fa-moon' : 'fa-sun'"></i>
       </button>
-
     </nav>
 
+    <!-- Mobile right: cart + hamburger -->
+    <div class="mobile-actions">
+      <a routerLink="/cart" class="cart-link mobile-cart" (click)="closeMobile()">
+        <i class="fas fa-cart-shopping"></i>
+        <span class="badge" *ngIf="cartCount$ | async as c" [class.show]="c > 0">{{ c }}</span>
+      </a>
+      <button class="hamburger" type="button" (click)="toggleMobile()" [attr.aria-expanded]="mobileOpen">
+        <i class="fas" [ngClass]="mobileOpen ? 'fa-xmark' : 'fa-bars'"></i>
+      </button>
+    </div>
+
   </div>
+
+  <!-- Mobile drawer -->
+  <div class="mobile-drawer" [class.open]="mobileOpen">
+    <div class="drawer-inner">
+
+      <!-- Mobile search -->
+      <form class="mobile-search-form" (ngSubmit)="submitSearch()">
+        <i class="fas fa-search"></i>
+        <input
+          class="mobile-search-input"
+          [(ngModel)]="search"
+          name="mq"
+          placeholder="Search restaurants, dishes…"
+        />
+      </form>
+
+      <!-- Mobile location -->
+      <div class="mobile-select-wrap">
+        <i class="fas fa-location-dot"></i>
+        <select [(ngModel)]="location" class="mobile-select">
+          <option *ngFor="let l of locations" [value]="l">{{ l }}</option>
+        </select>
+      </div>
+
+      <!-- Mobile nav links -->
+      <nav class="mobile-links">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="closeMobile()">
+          <i class="fas fa-home"></i> Home
+        </a>
+        <a routerLink="/restaurants" routerLinkActive="active" (click)="closeMobile()">
+          <i class="fas fa-store"></i> Restaurants
+        </a>
+        <a routerLink="/search" routerLinkActive="active" (click)="closeMobile()">
+          <i class="fas fa-bowl-food"></i> Food
+        </a>
+        <a routerLink="/cart" routerLinkActive="active" (click)="closeMobile()">
+          <i class="fas fa-cart-shopping"></i> Cart
+          <span class="badge mobile-badge" *ngIf="cartCount$ | async as c" [class.show]="c > 0">{{ c }}</span>
+        </a>
+      </nav>
+
+      <button class="btn theme-btn-mobile" type="button" (click)="theme.toggle()">
+        <i class="fas" [ngClass]="theme.mode === 'dark' ? 'fa-moon' : 'fa-sun'"></i>
+        {{ theme.mode === 'dark' ? 'Dark mode' : 'Light mode' }}
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="drawer-overlay" [class.show]="mobileOpen" (click)="closeMobile()"></div>
+
 </header>

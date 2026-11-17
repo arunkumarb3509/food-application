@@ -1,7 +1,13 @@
 <a class="rc card" [routerLink]="['/restaurants', restaurant.id]">
+
+  <!-- Image -->
   <div class="img">
     <img [src]="restaurant.imageUrl" [alt]="restaurant.name" loading="lazy" />
-    <div class="promo" *ngIf="restaurant.promoted">PROMOTED</div>
+    <div class="promo" *ngIf="restaurant.promoted">
+      <i class="fas fa-bolt"></i> Promoted
+    </div>
+    <!-- gradient overlay -->
+    <div class="img-gradient"></div>
   </div>
 
   <div class="body">
@@ -9,12 +15,21 @@
       <div class="name">{{ restaurant.name }}</div>
       <app-rating-stars [rating]="restaurant.rating" [compact]="true"></app-rating-stars>
     </div>
+
     <div class="meta muted">
-      <span>{{ restaurant.cuisines.slice(0, 2).join(' • ') }}</span>
+      <span>{{ restaurant.cuisines.slice(0, 2).join(' · ') }}</span>
     </div>
+
     <div class="row">
-      <span class="pill">{{ restaurant.deliveryMins }} min</span>
-      <span class="pill">₹{{ restaurant.priceForOne }} for one</span>
+      <span class="pill pill-time">
+        <i class="fas fa-clock"></i>
+        {{ restaurant.deliveryMins }} min
+      </span>
+      <span class="pill pill-price">
+        <i class="fas fa-indian-rupee-sign"></i>
+        {{ restaurant.priceForOne }} for one
+      </span>
     </div>
   </div>
+
 </a>

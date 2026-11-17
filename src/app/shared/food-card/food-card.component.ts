@@ -10,9 +10,17 @@ import { Dish } from '../../core/models';
 export class FoodCardComponent {
   @Input({ required: true }) dish!: Dish;
 
+  justAdded = false;
+  private addTimer?: ReturnType<typeof setTimeout>;
+
   constructor(private readonly cart: CartService) {}
 
   add() {
     this.cart.add(this.dish, 1);
+    this.justAdded = true;
+    clearTimeout(this.addTimer);
+    this.addTimer = setTimeout(() => {
+      this.justAdded = false;
+    }, 1500);
   }
 }

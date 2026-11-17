@@ -4,10 +4,10 @@
 
 .app-main {
   min-height: calc(100vh - 72px);
-  padding-top: 72px; // sticky header space
+  padding-top: 72px; /* sticky header space */
 }
 
-@media (max-width: 540px) {
+@media (max-width: 760px) {
   .app-main {
     padding-top: 64px;
   }

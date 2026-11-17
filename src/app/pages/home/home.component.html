@@ -1,64 +1,106 @@
+<!-- ═══════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════ -->
 <section class="hero">
   <div class="container hero-inner">
+
+    <!-- Copy -->
     <div class="copy">
-      <div class="kicker">Hot & fresh • delivered fast</div>
-      <h1>Cravings? We’ve got the best bites near you.</h1>
-      <p class="muted">
-        Search dishes, explore trending restaurants, and order in seconds —
-        inspired by modern food delivery UX.
+      <div class="kicker hero-enter-1">
+        <i class="fas fa-fire-flame-curved"></i>
+        Hot &amp; fresh &bull; Delivered fast
+      </div>
+
+      <h1 class="hero-enter-2">
+        Craving something <span class="highlight">delicious</span>?
+      </h1>
+
+      <p class="hero-sub muted hero-enter-3">
+        Discover top-rated restaurants near you, explore trending
+        dishes, and order in seconds.
       </p>
 
-      <div class="hero-search glass">
+      <!-- Search -->
+      <div class="hero-search glass hero-enter-4">
+        <i class="fas fa-magnifying-glass search-ico"></i>
         <input
-          class="input"
+          class="search-field"
           [(ngModel)]="q"
-          placeholder="Search pizza, biryani, desserts..."
+          placeholder="Search pizza, biryani, burgers…"
+          (keydown.enter)="goSearch()"
         />
         <button class="btn primary" type="button" (click)="goSearch()">
+          <i class="fas fa-arrow-right"></i>
           Find food
         </button>
       </div>
 
-      <div class="chips-wrap">
-        <app-category-chips
-          [categories]="categories"
-          [selected]="'All'"
-        ></app-category-chips>
+      <!-- Category quick-links -->
+      <div class="quick-cats hero-enter-5">
+        <button
+          class="qcat"
+          *ngFor="let c of categories"
+          type="button"
+          (click)="goCategory(c.id)"
+        >
+          <span class="qcat-emoji">{{ c.emoji }}</span>
+          <span class="qcat-label">{{ c.label }}</span>
+        </button>
       </div>
     </div>
 
-    <div class="art card glass">
-      <div class="img">
+    <!-- Art card -->
+    <div class="art card glass hero-art hero-enter-6">
+      <div class="art-img">
         <img
           src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600"
-          alt="Food hero"
+          alt="Delicious food spread"
         />
-      </div>
-      <div class="art-badges">
-        <div class="b">
-          <div class="t">4.6★</div>
-          <div class="muted">Top rated</div>
+        <!-- floating badge -->
+        <div class="art-float-badge">
+          <i class="fas fa-star"></i>
+          <span>4.8 Top rated</span>
         </div>
-        <div class="b">
-          <div class="t">25 min</div>
+      </div>
+      <div class="art-stats">
+        <div class="stat">
+          <div class="stat-val">4.6<span class="star">★</span></div>
+          <div class="muted">Avg rating</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <div class="stat-val">25<span class="stat-unit">min</span></div>
           <div class="muted">Avg delivery</div>
         </div>
-        <div class="b">
-          <div class="t">₹0</div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <div class="stat-val">₹0</div>
           <div class="muted">Free delivery*</div>
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
+
+<!-- ═══════════════════════════════════════════════
+     TRENDING RESTAURANTS
+═══════════════════════════════════════════════ -->
 <section class="section">
   <div class="container">
-    <div class="head">
-      <h2>Trending restaurants</h2>
-      <a class="btn" routerLink="/restaurants">View all</a>
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-label">
+          <i class="fas fa-fire"></i> Trending
+        </div>
+        <h2>Top restaurants near you</h2>
+      </div>
+      <a class="btn" routerLink="/restaurants">
+        View all <i class="fas fa-arrow-right"></i>
+      </a>
     </div>
-    <div class="grid cols-4">
+    <div class="grid cols-4 reveal">
       <app-restaurant-card
         *ngFor="let r of trending"
         [restaurant]="r"
@@ -67,63 +109,169 @@
   </div>
 </section>
 
-<section class="section">
+
+<!-- ═══════════════════════════════════════════════
+     FEATURED DISHES
+═══════════════════════════════════════════════ -->
+<section class="section section-tinted">
   <div class="container">
-    <div class="head">
-      <h2>Featured dishes</h2>
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-label">
+          <i class="fas fa-utensils"></i> Featured
+        </div>
+        <h2>Dishes you'll love</h2>
+      </div>
       <a
         class="btn"
         [routerLink]="['/search']"
         [queryParams]="{ q: 'bestseller' }"
-        >See more</a
       >
+        See more <i class="fas fa-arrow-right"></i>
+      </a>
     </div>
-    <div class="grid cols-3">
-      <app-food-card *ngFor="let d of featured" [dish]="d"></app-food-card>
+    <!-- Category filter row -->
+    <div class="filter-row reveal">
+      <app-category-chips
+        [categories]="categories"
+        [selected]="activeCategory"
+        (selectedChange)="onCategoryChange($event)"
+      ></app-category-chips>
+    </div>
+    <div class="grid cols-3 reveal">
+      <app-food-card *ngFor="let d of filteredDishes" [dish]="d"></app-food-card>
     </div>
   </div>
 </section>
 
-<section class="section promos">
+
+<!-- ═══════════════════════════════════════════════
+     PROMO BANNERS
+═══════════════════════════════════════════════ -->
+<section class="section">
   <div class="container">
-    <div class="grid cols-2">
-      <div class="promo card glass">
-        <div class="p-title">Flat 60% off</div>
-        <div class="muted">On your first 3 orders • Use code FOODLY</div>
-        <div class="p-cta">
-          <a class="btn primary" routerLink="/restaurants">Order now</a>
+    <div class="promos-grid reveal">
+
+      <div class="promo-card promo-red card glass">
+        <div class="promo-icon-wrap">
+          <i class="fas fa-percent"></i>
+        </div>
+        <div class="promo-body">
+          <div class="promo-eyebrow">Limited offer</div>
+          <div class="promo-title">Flat 60% off</div>
+          <div class="muted promo-sub">On your first 3 orders</div>
+          <div class="promo-code">
+            <i class="fas fa-tag"></i>
+            <span>FOODLY60</span>
+          </div>
+        </div>
+        <div class="promo-cta">
+          <a class="btn primary" routerLink="/restaurants">
+            Order now <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
       </div>
-      <div class="promo card glass alt">
-        <div class="p-title">Free delivery</div>
-        <div class="muted">On orders above ₹499 • Limited time</div>
-        <div class="p-cta">
-          <a class="btn" routerLink="/search" [queryParams]="{ q: 'drinks' }"
-            >Explore deals</a
+
+      <div class="promo-card promo-green card glass">
+        <div class="promo-icon-wrap">
+          <i class="fas fa-truck-fast"></i>
+        </div>
+        <div class="promo-body">
+          <div class="promo-eyebrow">Every day deal</div>
+          <div class="promo-title">Free delivery</div>
+          <div class="muted promo-sub">On orders above ₹499</div>
+          <div class="promo-code">
+            <i class="fas fa-tag"></i>
+            <span>FREEFAST</span>
+          </div>
+        </div>
+        <div class="promo-cta">
+          <a
+            class="btn"
+            routerLink="/search"
+            [queryParams]="{ q: 'drinks' }"
           >
+            Explore deals <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<section class="section download">
-  <div class="container dl card glass">
-    <!-- Left Content -->
-    <div class="left">
-      <span class="kicker">📱 Foodly Mobile App</span>
 
-      <h2>Download the app</h2>
+<!-- ═══════════════════════════════════════════════
+     WHY CHOOSE US
+═══════════════════════════════════════════════ -->
+<section class="section section-tinted">
+  <div class="container">
+    <div class="sec-head centered reveal">
+      <div class="sec-label"><i class="fas fa-award"></i> Why Foodly</div>
+      <h2>Everything you love about food delivery</h2>
+    </div>
+    <div class="benefits-grid reveal">
+
+      <div class="benefit-card card">
+        <div class="benefit-icon benefit-icon--speed">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <h3>Lightning fast</h3>
+        <p class="muted">Average delivery in under 30 minutes — straight to your door.</p>
+      </div>
+
+      <div class="benefit-card card">
+        <div class="benefit-icon benefit-icon--fresh">
+          <i class="fas fa-leaf"></i>
+        </div>
+        <h3>Fresh every time</h3>
+        <p class="muted">Restaurants pack orders only when our rider is nearby.</p>
+      </div>
+
+      <div class="benefit-card card">
+        <div class="benefit-icon benefit-icon--value">
+          <i class="fas fa-wallet"></i>
+        </div>
+        <h3>Best value</h3>
+        <p class="muted">Exclusive deals, coupons, and free delivery on every weekend.</p>
+      </div>
+
+      <div class="benefit-card card">
+        <div class="benefit-icon benefit-icon--track">
+          <i class="fas fa-location-dot"></i>
+        </div>
+        <h3>Live tracking</h3>
+        <p class="muted">Watch your rider in real-time right from the app.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     DOWNLOAD APP
+═══════════════════════════════════════════════ -->
+<section class="section download">
+  <div class="container dl card glass reveal">
+
+    <!-- Left Content -->
+    <div class="dl-left">
+      <span class="kicker dl-kicker">
+        <i class="fas fa-mobile-screen-button"></i>
+        Foodly Mobile App
+      </span>
+
+      <h2>Order from your pocket</h2>
 
       <p class="muted">
-        Order your favorite food, save your favorite dishes, reorder quickly,
-        and track your delivery in real time.
+        Save your favourites, reorder in one tap, and track your delivery
+        in real time. Available on iOS and Android.
       </p>
 
       <div class="stores">
         <button class="store-btn" type="button">
           <i class="fa-brands fa-apple"></i>
-
           <span>
             <small>Download on the</small>
             <strong>App Store</strong>
@@ -132,7 +280,6 @@
 
         <button class="store-btn" type="button">
           <i class="fa-brands fa-google-play"></i>
-
           <span>
             <small>GET IT ON</small>
             <strong>Google Play</strong>
@@ -144,81 +291,68 @@
     <!-- Phone Preview -->
     <div class="phone">
       <div class="phone-frame">
-        <!-- Phone Header -->
+
         <div class="phone-header">
           <div>
             <small>Delivering to</small>
-            <strong>Attayyampatti 📍</strong>
+            <strong>Bengaluru 📍</strong>
           </div>
-
           <div class="profile">
-            <i class="fa-solid fa-user"></i>
+            <i class="fas fa-user"></i>
           </div>
         </div>
 
-        <!-- Search -->
         <div class="phone-search">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <span>Search for food...</span>
+          <i class="fas fa-magnifying-glass"></i>
+          <span>Search for food…</span>
         </div>
 
-        <!-- Food Banner -->
         <div class="phone-banner">
           <div class="banner-content">
             <small>Hungry?</small>
             <strong>Get 30% OFF</strong>
             <span>on your first order</span>
           </div>
-
-          <img src="assets/biryani.png" alt="Delicious food" />
+          <img src="assets/biryani.png" alt="Biryani" />
         </div>
 
-        <!-- Categories -->
         <div class="phone-section-title">
           <strong>Popular categories</strong>
         </div>
 
         <div class="mini-categories">
           <div class="mini-category">
-            <span>🍔</span>
-            <small>Burger</small>
+            <span>🍔</span><small>Burger</small>
           </div>
-
           <div class="mini-category">
-            <span>🍕</span>
-            <small>Pizza</small>
+            <span>🍕</span><small>Pizza</small>
           </div>
-
           <div class="mini-category">
-            <span>🍛</span>
-            <small>Biryani</small>
+            <span>🍛</span><small>Biryani</small>
           </div>
-
           <div class="mini-category">
-            <span>🍰</span>
-            <small>Dessert</small>
+            <span>🍰</span><small>Dessert</small>
           </div>
         </div>
 
-        <!-- Popular Food -->
         <div class="phone-section-title">
           <strong>Popular near you</strong>
         </div>
 
         <div class="mini-food">
           <img src="assets/burger.png" alt="Burger" />
-
           <div class="mini-food-info">
             <strong>Classic Burger</strong>
-            <small>⭐ 4.8 • 20 min</small>
+            <small>⭐ 4.8 &bull; 20 min</small>
             <b>₹199</b>
           </div>
-
           <button type="button">
-            <i class="fa-solid fa-plus"></i>
+            <i class="fas fa-plus"></i>
           </button>
         </div>
+
       </div>
     </div>
+
   </div>
 </section>
