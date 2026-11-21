@@ -1,172 +1,94 @@
-<!-- <ng-container *ngIf="vm$ | async as vm">
-  <section class="section">
-    <div class="container">
-      <div class="top">
-        <div>
-          <h2>Your cart</h2>
-          <div class="muted" *ngIf="vm.lines.length; else empty">Review items and checkout.</div>
-        </div>
-        <a class="btn" routerLink="/restaurants">Add more</a>
-      </div>
-
-      <ng-template #empty>
-        <div class="card glass empty">
-          <h3>Cart is empty</h3>
-          <p class="muted">Add a few tasty dishes to see them here.</p>
-          <a class="btn primary" routerLink="/restaurants">Browse restaurants</a>
-        </div>
-      </ng-template>
-
-      <div class="layout" *ngIf="vm.lines.length">
-        <div class="items card glass">
-          <div class="line" *ngFor="let l of vm.lines">
-            <img class="thumb" [src]="l.dish.imageUrl" [alt]="l.dish.name" />
-            <div class="info">
-              <div class="name">{{ l.dish.name }}</div>
-              <div class="muted">₹{{ l.dish.price }} • {{ l.dish.category }}</div>
-              <div class="qty">
-                <button class="btn" type="button" (click)="dec(l.dish.id)">−</button>
-                <div class="count">{{ l.qty }}</div>
-                <button class="btn" type="button" (click)="inc(l.dish.id)">+</button>
-              </div>
-            </div>
-            <div class="right">
-              <div class="sum">₹{{ l.qty * l.dish.price }}</div>
-              <button class="btn" type="button" (click)="remove(l.dish.id)">Remove</button>
-            </div>
-          </div>
-        </div>
-
-        <aside class="bill card glass">
-          <h3>Bill details</h3>
-          <div class="row">
-            <span class="muted">Subtotal</span>
-            <span>₹{{ vm.subtotal }}</span>
-          </div>
-          <div class="row">
-            <span class="muted">Delivery fee</span>
-            <span>{{ vm.deliveryFee ? ('₹' + vm.deliveryFee) : 'Free' }}</span>
-          </div>
-          <div class="row">
-            <span class="muted">Platform fee</span>
-            <span>₹{{ vm.platformFee }}</span>
-          </div>
-          <div class="row total">
-            <span>Total</span>
-            <span>₹{{ vm.total }}</span>
-          </div>
-          <a class="btn primary" routerLink="/checkout">Checkout</a>
-          <div class="muted note">Tip: orders above ₹499 get free delivery.</div>
-        </aside>
-      </div>
-    </div>
-  </section>
-</ng-container> -->
 <ng-container *ngIf="vm$ | async as vm">
-  <ng-container *ngIf="vm$ | async as vm">
-    <!-- If cart has items -->
-    <div class="layout" *ngIf="vm.lines.length > 0; else empty">
-      <!-- LEFT -->
-      <div class="items card glass">
-        <div class="restaurant-info">
-          <h3>🍽️ Foodly Restaurant</h3>
-          <span class="muted"> Fast Delivery • 4.8 ⭐ </span>
-        </div>
+  <!-- If cart has items -->
+  <div class="layout" *ngIf="vm.lines.length > 0; else empty">
+    <!-- LEFT -->
+    <div class="items card glass">
+      <div class="restaurant-info">
+        <h3>🍽️ Foodly Restaurant</h3>
+        <span class="muted"> Fast Delivery • 4.8 ⭐ </span>
+      </div>
 
-        <div class="line" *ngFor="let l of vm.lines">
-          <img class="thumb" [src]="l.dish.imageUrl" [alt]="l.dish.name" />
+      <div class="line" *ngFor="let l of vm.lines">
+        <img class="thumb" [src]="l.dish.imageUrl" [alt]="l.dish.name" />
 
-          <div class="info">
-            <div class="title-row">
-              <div>
-                <div class="name">{{ l.dish.name }}</div>
-
-                <div class="muted">
-                  {{ l.dish.category }}
-                </div>
-              </div>
-
-              <div class="price">₹{{ l.dish.price }}</div>
+        <div class="info">
+          <div class="title-row">
+            <div>
+              <div class="name">{{ l.dish.name }}</div>
+              <div class="muted cat-label">{{ l.dish.category }}</div>
             </div>
+            <div class="price">₹{{ l.dish.price }}</div>
+          </div>
 
-            <div class="actions">
-              <div class="qty">
-                <button class="qty-btn" (click)="dec(l.dish.id)">−</button>
-
-                <span class="count">
-                  {{ l.qty }}
-                </span>
-
-                <button class="qty-btn" (click)="inc(l.dish.id)">+</button>
-              </div>
-
-              <button class="remove-btn" (click)="remove(l.dish.id)">
-                <i class="fas fa-trash"></i>
-              </button>
+          <div class="actions">
+            <div class="qty">
+              <button class="qty-btn" type="button" (click)="dec(l.dish.id)">−</button>
+              <span class="count">{{ l.qty }}</span>
+              <button class="qty-btn" type="button" (click)="inc(l.dish.id)">+</button>
             </div>
+            <div class="line-total">₹{{ l.qty * l.dish.price }}</div>
+            <button class="remove-btn" type="button" (click)="remove(l.dish.id)" aria-label="Remove item">
+              <i class="fas fa-trash"></i>
+            </button>
           </div>
         </div>
       </div>
-
-      <!-- RIGHT -->
-      <aside class="bill card glass">
-        <h3>Bill Details</h3>
-
-        <div class="offer">🎉 You saved ₹50 on this order</div>
-
-        <div class="row">
-          <span>Subtotal</span>
-          <span>₹{{ vm.subtotal }}</span>
-        </div>
-
-        <div class="row">
-          <span>Delivery Fee</span>
-          <span>{{ vm.deliveryFee ? "₹" + vm.deliveryFee : "FREE" }}</span>
-        </div>
-
-        <div class="row">
-          <span>Platform Fee</span>
-          <span>₹{{ vm.platformFee }}</span>
-        </div>
-
-        <div class="progress-box">
-          <div class="muted">
-            ₹{{ 499 - vm.subtotal }} away from FREE delivery
-          </div>
-
-          <div class="progress">
-            <div class="fill" [style.width.%]="(vm.subtotal / 499) * 100"></div>
-          </div>
-        </div>
-
-        <div class="row total">
-          <span>Total</span>
-          <span>₹{{ vm.total }}</span>
-        </div>
-
-        <button class="checkout-btn">Proceed to Checkout →</button>
-      </aside>
     </div>
 
-    <!-- Empty Cart -->
-    <ng-template #empty>
-      <div class="empty-cart card glass">
-        <div class="empty-icon">
-          <i class="fas fa-cart-shopping"></i>
-        </div>
+    <!-- RIGHT -->
+    <aside class="bill card glass">
+      <h3>Bill Details</h3>
 
-        <h2>Your cart is feeling lonely 😔</h2>
+      <div class="offer">🎉 You saved ₹50 on this order</div>
 
-        <p class="muted">
-          Looks like you haven't added any delicious food yet. Browse our menu
-          and order your favourite meals.
-        </p>
-
-        <a class="browse-btn" routerLink="/restaurants">
-          <i class="fas fa-utensils"></i>
-          Browse Restaurants
-        </a>
+      <div class="row">
+        <span class="muted">Subtotal</span>
+        <span>₹{{ vm.subtotal }}</span>
       </div>
-    </ng-template>
-  </ng-container>
+
+      <div class="row">
+        <span class="muted">Delivery Fee</span>
+        <span [class.free]="!vm.deliveryFee">{{ vm.deliveryFee ? "₹" + vm.deliveryFee : "FREE" }}</span>
+      </div>
+
+      <div class="row">
+        <span class="muted">Platform Fee</span>
+        <span>₹{{ vm.platformFee }}</span>
+      </div>
+
+      <div class="progress-box" *ngIf="vm.subtotal < 499">
+        <div class="muted progress-label">
+          ₹{{ 499 - vm.subtotal }} away from FREE delivery
+        </div>
+        <div class="progress">
+          <div class="fill" [style.width.%]="(vm.subtotal / 499) * 100"></div>
+        </div>
+      </div>
+
+      <div class="row total">
+        <span>Total</span>
+        <span>₹{{ vm.total }}</span>
+      </div>
+
+      <a class="checkout-btn" routerLink="/checkout">Proceed to Checkout →</a>
+    </aside>
+  </div>
+
+  <!-- Empty Cart -->
+  <ng-template #empty>
+    <div class="empty-cart card glass">
+      <div class="empty-icon">
+        <i class="fas fa-cart-shopping"></i>
+      </div>
+      <h2>Your cart is feeling lonely 😔</h2>
+      <p class="muted">
+        Looks like you haven't added any delicious food yet. Browse our menu
+        and order your favourite meals.
+      </p>
+      <a class="browse-btn btn primary" routerLink="/restaurants">
+        <i class="fas fa-utensils"></i>
+        Browse Restaurants
+      </a>
+    </div>
+  </ng-template>
 </ng-container>

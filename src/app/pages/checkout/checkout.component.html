@@ -1,85 +1,134 @@
 <ng-container *ngIf="vm$ | async as vm">
   <section class="section">
     <div class="container">
-      <div class="top">
-        <div>
-          <h2>Checkout</h2>
-          <div class="muted">Delivery address • payment • order summary.</div>
+
+      <!-- Order Success State -->
+      <div class="success-card card glass" *ngIf="orderPlaced">
+        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+        <h2>Order Placed! 🎉</h2>
+        <p class="muted">Your order has been confirmed. Estimated delivery: <strong>28–35 min</strong>.</p>
+        <div class="order-ref muted">Order ref: <strong>#FDL{{ orderRef }}</strong></div>
+        <a class="btn primary" routerLink="/">Back to Home</a>
+      </div>
+
+      <!-- Empty cart guard -->
+      <div class="empty-guard card glass" *ngIf="!orderPlaced && !vm.lines.length">
+        <i class="fas fa-cart-shopping"></i>
+        <h3>Your cart is empty</h3>
+        <p class="muted">Add items before checking out.</p>
+        <a class="btn primary" routerLink="/restaurants">Browse Restaurants</a>
+      </div>
+
+      <!-- Checkout form -->
+      <ng-container *ngIf="!orderPlaced && vm.lines.length">
+        <div class="top">
+          <div>
+            <h2>Checkout</h2>
+            <div class="muted">Delivery address • payment • order summary.</div>
+          </div>
+          <a class="btn" routerLink="/cart">← Back to cart</a>
         </div>
-        <a class="btn" routerLink="/cart">Back to cart</a>
-      </div>
 
-      <div class="layout">
-        <form class="card glass box" [formGroup]="form">
-          <h3>Delivery details</h3>
-          <div class="grid2">
-            <div>
-              <div class="label">Full name</div>
-              <input class="input" formControlName="fullName" placeholder="Your name" />
+        <div class="layout">
+          <form class="card glass box" [formGroup]="form" (ngSubmit)="placeOrder()">
+            <h3>Delivery details</h3>
+            <div class="grid2">
+              <div class="field">
+                <div class="label">Full name *</div>
+                <input
+                  class="input"
+                  formControlName="fullName"
+                  placeholder="Your name"
+                  [class.invalid]="isInvalid('fullName')"
+                />
+                <div class="err" *ngIf="isInvalid('fullName')">Please enter your full name.</div>
+              </div>
+              <div class="field">
+                <div class="label">Phone *</div>
+                <input
+                  class="input"
+                  formControlName="phone"
+                  placeholder="10-digit mobile"
+                  [class.invalid]="isInvalid('phone')"
+                />
+                <div class="err" *ngIf="isInvalid('phone')">Enter a valid phone number.</div>
+              </div>
             </div>
-            <div>
-              <div class="label">Phone</div>
-              <input class="input" formControlName="phone" placeholder="10-digit mobile" />
+            <div class="field">
+              <div class="label">Address *</div>
+              <input
+                class="input"
+                formControlName="addressLine"
+                placeholder="House no, building, street, area"
+                [class.invalid]="isInvalid('addressLine')"
+              />
+              <div class="err" *ngIf="isInvalid('addressLine')">Please enter your delivery address.</div>
             </div>
-          </div>
-          <div>
-            <div class="label">Address</div>
-            <input class="input" formControlName="addressLine" placeholder="House no, building, street, area" />
-          </div>
-          <div>
-            <div class="label">Landmark (optional)</div>
-            <input class="input" formControlName="landmark" placeholder="Near..." />
-          </div>
+            <div class="field">
+              <div class="label">Landmark <span class="muted">(optional)</span></div>
+              <input class="input" formControlName="landmark" placeholder="Near..." />
+            </div>
 
-          <h3 class="mt">Payment</h3>
-          <div class="pay">
-            <label class="opt">
-              <input type="radio" value="UPI" formControlName="payment" />
-              <span>UPI</span>
-            </label>
-            <label class="opt">
-              <input type="radio" value="Card" formControlName="payment" />
-              <span>Card</span>
-            </label>
-            <label class="opt">
-              <input type="radio" value="COD" formControlName="payment" />
-              <span>Cash on delivery</span>
-            </label>
-          </div>
-        </form>
+            <h3 class="mt">Payment method</h3>
+            <div class="pay">
+              <label class="opt" [class.opt-selected]="form.value.payment === 'UPI'">
+                <input type="radio" value="UPI" formControlName="payment" />
+                <i class="fas fa-mobile-screen-button"></i>
+                <span>UPI</span>
+              </label>
+              <label class="opt" [class.opt-selected]="form.value.payment === 'Card'">
+                <input type="radio" value="Card" formControlName="payment" />
+                <i class="fas fa-credit-card"></i>
+                <span>Card</span>
+              </label>
+              <label class="opt" [class.opt-selected]="form.value.payment === 'COD'">
+                <input type="radio" value="COD" formControlName="payment" />
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Cash on delivery</span>
+              </label>
+            </div>
+          </form>
 
-        <aside class="card glass box">
-          <h3>Order summary</h3>
-          <div class="mini" *ngFor="let l of vm.lines">
-            <span class="muted">{{ l.qty }}×</span>
-            <span class="name">{{ l.dish.name }}</span>
-            <span class="right">₹{{ l.qty * l.dish.price }}</span>
-          </div>
+          <aside class="card glass box">
+            <h3>Order summary</h3>
+            <div class="mini" *ngFor="let l of vm.lines">
+              <span class="muted">{{ l.qty }}×</span>
+              <span class="item-name">{{ l.dish.name }}</span>
+              <span class="item-price">₹{{ l.qty * l.dish.price }}</span>
+            </div>
 
-          <div class="divider"></div>
-          <div class="row">
-            <span class="muted">Subtotal</span>
-            <span>₹{{ vm.subtotal }}</span>
-          </div>
-          <div class="row">
-            <span class="muted">Delivery fee</span>
-            <span>{{ vm.deliveryFee ? ('₹' + vm.deliveryFee) : 'Free' }}</span>
-          </div>
-          <div class="row">
-            <span class="muted">Platform fee</span>
-            <span>₹{{ vm.platformFee }}</span>
-          </div>
-          <div class="row total">
-            <span>Total</span>
-            <span>₹{{ vm.total }}</span>
-          </div>
+            <div class="divider"></div>
+            <div class="row">
+              <span class="muted">Subtotal</span>
+              <span>₹{{ vm.subtotal }}</span>
+            </div>
+            <div class="row">
+              <span class="muted">Delivery fee</span>
+              <span [class.free]="!vm.deliveryFee">{{ vm.deliveryFee ? ('₹' + vm.deliveryFee) : 'Free' }}</span>
+            </div>
+            <div class="row">
+              <span class="muted">Platform fee</span>
+              <span>₹{{ vm.platformFee }}</span>
+            </div>
+            <div class="row total">
+              <span>Total</span>
+              <span>₹{{ vm.total }}</span>
+            </div>
 
-          <button class="btn primary" type="button" [disabled]="placing || !vm.lines.length" (click)="placeOrder()">
-            {{ placing ? 'Placing order...' : 'Place order' }}
-          </button>
-          <div class="muted note">This is UI-only — no real payment is processed.</div>
-        </aside>
-      </div>
+            <button
+              class="btn primary place-btn"
+              type="button"
+              [disabled]="placing"
+              (click)="placeOrder()"
+            >
+              <i class="fas fa-spinner fa-spin" *ngIf="placing"></i>
+              {{ placing ? 'Placing order...' : 'Place order ₹' + vm.total }}
+            </button>
+            <div class="muted note"><i class="fas fa-lock"></i> Secure checkout — no real payment processed.</div>
+          </aside>
+        </div>
+      </ng-container>
+
     </div>
   </section>
 </ng-container>

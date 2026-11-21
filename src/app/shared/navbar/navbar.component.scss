@@ -117,7 +117,7 @@
 .custom-select {
   border: none;
   outline: none;
-  background: transparent;
+  background: var(--bg-elev);
   color: var(--text);
   font-size: 14px;
   font-weight: 600;
@@ -126,6 +126,11 @@
   -webkit-appearance: none;
   padding-right: 2px;
   min-width: 100px;
+
+  option {
+    background: var(--bg-elev);
+    color: var(--text);
+  }
 }
 
 /* ══════════════════════════════════════════════
@@ -388,6 +393,11 @@
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+
+  option {
+    background: var(--bg-elev);
+    color: var(--text);
+  }
 }
 
 .mobile-links {

@@ -113,6 +113,18 @@ body.theme-dark {
       transparent 60%
     ),
     linear-gradient(180deg, rgba(11, 17, 32, 0.96), rgba(11, 17, 32, 0.90));
+
+  /* Fix native select elements in dark mode */
+  select {
+    background-color: #111827;
+    color: rgba(255, 255, 255, 0.94);
+    color-scheme: dark;
+  }
+
+  select option {
+    background-color: #111827;
+    color: rgba(255, 255, 255, 0.94);
+  }
 }
 
 a {

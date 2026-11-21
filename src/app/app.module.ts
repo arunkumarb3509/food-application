@@ -11,6 +11,7 @@ import { RestaurantCardComponent } from './shared/restaurant-card/restaurant-car
 import { FoodCardComponent } from './shared/food-card/food-card.component';
 import { RatingStarsComponent } from './shared/rating-stars/rating-stars.component';
 import { FloatingCartComponent } from './shared/floating-cart/floating-cart.component';
+import { TiltDirective } from './shared/tilt.directive';
 import { HomeComponent } from './pages/home/home.component';
 import { RestaurantListComponent } from './pages/restaurant-list/restaurant-list.component';
 import { RestaurantDetailsComponent } from './pages/restaurant-details/restaurant-details.component';
@@ -28,6 +29,7 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
     FoodCardComponent,
     RatingStarsComponent,
     FloatingCartComponent,
+    TiltDirective,
     HomeComponent,
     RestaurantListComponent,
     RestaurantDetailsComponent,
